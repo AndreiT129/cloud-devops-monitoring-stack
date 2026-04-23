@@ -2,25 +2,22 @@
 set -e
 
 echo "Updating package metadata..."
-sudo dnf makecache
+dnf makecache
 
 echo "Installing base tools..."
-sudo dnf install -y git curl wget nano vim dnf-plugins-core
+dnf install -y git curl wget nano vim dnf-plugins-core
 
 echo "Removing conflicting container tools if present..."
-sudo dnf remove -y podman buildah docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine || true
+dnf remove -y podman buildah docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine || true
 
 echo "Adding Docker repository..."
-sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
 echo "Installing Docker and Compose plugin..."
-sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 echo "Starting and enabling Docker..."
-sudo systemctl enable --now docker
-
-echo "Adding current user to docker group..."
-sudo usermod -aG docker "$USER" || true
+systemctl enable --now docker
 
 echo
 echo "Bootstrap complete."
