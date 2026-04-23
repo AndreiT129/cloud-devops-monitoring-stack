@@ -10,7 +10,7 @@ It includes:
 * a PostgreSQL database
 * Prometheus for metrics collection
 * Grafana for dashboard visualization
-* a deployment script for automated startup
+* automation scripts for host preparation and stack deployment
 
 The goal of the project was to build a reproducible DevOps-style environment that demonstrates service orchestration, observability, and deployment automation.
 
@@ -54,23 +54,24 @@ PostgreSQL
 * Database connectivity with PostgreSQL
 * Prometheus metrics scraping
 * Grafana dashboard visualization
-* Automated deployment using a shell script
+* Automated deployment using shell scripts
 * Docker volumes for persistent data
+* Reproducible setup on Oracle Linux 9
 
 ---
 
 ## Project Structure
 
 ```text
-cloud-devops-monitoring-project/
+cloud-devops-monitoring-stack/
 ├── app/
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── prometheus/
 │   └── prometheus.yml
-├── grafana/
 ├── scripts/
+│   ├── bootstrap-ol9.sh
 │   └── deploy.sh
 ├── docs/
 ├── docker-compose.yml
@@ -107,11 +108,26 @@ Dashboard panels created:
 
 ---
 
+## Prerequisites
+
+For a fresh Oracle Linux 9 VM, run:
+
+```bash
+chmod +x scripts/bootstrap-ol9.sh
+./scripts/bootstrap-ol9.sh
+```
+
+Then either log out and back in, or run:
+
+```bash
+newgrp docker
+```
+
+---
+
 ## Deployment
 
-The full stack is started with Docker Compose.
-
-To deploy the project:
+Start the full stack with:
 
 ```bash
 chmod +x scripts/deploy.sh
@@ -183,6 +199,7 @@ curl http://localhost:5000/db-check
 * Metrics collection and observability
 * Dashboard-based monitoring
 * Deployment automation with shell scripting
+* Reproducible environment preparation
 
 ---
 
