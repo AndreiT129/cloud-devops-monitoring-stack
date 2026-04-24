@@ -203,9 +203,68 @@ curl http://localhost:5000/db-check
 
 ---
 
+## Cloud Deployment on Azure
+
+This project was also deployed on a Microsoft Azure virtual machine.
+
+The cloud deployment used an Ubuntu-based Azure VM and reused the same Docker Compose stack from the local environment.
+
+### Azure Deployment Steps
+
+- Provisioned an Ubuntu Azure VM
+- Connected to the VM using SSH key authentication
+- Installed Docker and Docker Compose
+- Cloned this GitHub repository
+- Deployed the stack using `scripts/deploy.sh`
+- Configured Azure Network Security Group inbound rules
+
+### Azure Network Security Group Rules
+
+The following inbound TCP ports were opened:
+
+| Port | Service |
+|------|---------|
+| 3000 | Grafana |
+| 5000 | Flask application |
+| 9090 | Prometheus |
+
+### Ubuntu Bootstrap
+
+For Ubuntu-based systems, the host can be prepared with:
+
+```bash
+chmod +x scripts/bootstrap-ubuntu.sh
+./scripts/bootstrap-ubuntu.sh
+newgrp docker
+
+### Infrastructure
+
+- Azure Virtual Machine (Ubuntu)
+- Docker + Docker Compose
+- Public IP with exposed ports via Network Security Group
+
+### Exposed Services
+
+- Grafana → Port 3000
+- Flask App → Port 5000
+- Prometheus → Port 9090
+
+### Screenshots
+
+#### Grafana Dashboard (Azure)
+![Grafana Azure](docs/grafana-azure.png)
+
+#### Azure VM Overview
+![Azure VM](docs/azure-vm.png)
+
+#### Azure Network Security Rules
+![Azure NSG](docs/azure-nsg.png)
+
+---
+
 ## Future Improvements
 
-* Deploy the stack to Azure
+* Deploy the stack to Azure (Done)
 * Add NGINX reverse proxy
 * Add CI/CD with GitHub Actions
 * Add alerting rules in Grafana / Prometheus
