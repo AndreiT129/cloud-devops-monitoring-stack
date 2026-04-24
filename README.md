@@ -236,6 +236,7 @@ For Ubuntu-based systems, the host can be prepared with:
 chmod +x scripts/bootstrap-ubuntu.sh
 ./scripts/bootstrap-ubuntu.sh
 newgrp docker
+```
 
 ### Infrastructure
 
